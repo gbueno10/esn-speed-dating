@@ -46,13 +46,13 @@ export default function LoginPage() {
   }
 
   return (
-    <Card className="w-full max-w-md cyber-card border-none overflow-hidden animate-fade-in relative group">
+    <Card className="w-full max-w-md event-card border-none overflow-hidden animate-fade-in relative group">
       {/* Background Animated Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-secondary/10 opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
       
       <div className="relative p-8 text-center overflow-hidden">
         {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/20 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
 
         <div className="relative z-10 space-y-2">
@@ -61,7 +61,7 @@ export default function LoginPage() {
             WELCOME BACK
           </CardTitle>
           <CardDescription className="text-muted-foreground font-semibold tracking-wide uppercase text-xs">
-            ESN Cyber Speed Dating
+            ESN Speed Dating
           </CardDescription>
         </div>
       </div>
@@ -75,24 +75,24 @@ export default function LoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-5">
           <div className="space-y-2">
-            <Label htmlFor="email" className="font-bold text-xs uppercase tracking-wider text-secondary">Email</Label>
+            <Label htmlFor="email" className="auth-label">Email</Label>
             <Input
               id="email"
               name="email"
               type="email"
               placeholder="you@esnporto.org"
-              className="cyber-input h-12"
+              className="event-input h-12"
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password" className="font-bold text-xs uppercase tracking-wider text-secondary">Password</Label>
+            <Label htmlFor="password" className="auth-label">Password</Label>
             <Input
               id="password"
               name="password"
               type="password"
               placeholder="••••••••"
-              className="cyber-input h-12"
+              className="event-input h-12"
               required
             />
           </div>
@@ -105,9 +105,9 @@ export default function LoginPage() {
           </Button>
         </form>
 
-        <p className="text-center text-sm text-muted-foreground mt-8">
+        <p className="text-center text-sm text-white/50 mt-8 font-medium">
           New here?{" "}
-          <Link href="/signup" className="text-secondary font-bold hover:text-white transition-colors uppercase tracking-wide">
+          <Link href="/signup" className="text-primary font-black hover:text-white transition-colors uppercase tracking-widest text-xs underline underline-offset-4">
             Create Account
           </Link>
         </p>

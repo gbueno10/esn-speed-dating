@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useAppSettings } from "@/components/app-settings-provider";
 import { ConnectionGrid } from "@/components/connection-grid";
 import { Badge } from "@/components/ui/badge";
+import { LoadingScreen } from "@/components/ui/loading-screen";
 import { Clock, Heart, Sparkles } from "lucide-react";
 
 type ConnectionItem = {
@@ -41,11 +42,7 @@ export default function MyConnectionsPage() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <div className="animate-pulse text-muted-foreground">Loading...</div>
-      </div>
-    );
+    return <LoadingScreen message="Loading Connections" />;
   }
 
   const matchCount = connections.filter((c) => c.isMutualMatch).length;

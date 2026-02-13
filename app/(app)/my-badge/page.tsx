@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ProfileBadge } from "@/components/profile-badge";
+import { LoadingScreen } from "@/components/ui/loading-screen";
 import type { SpeedDatingProfile } from "@/lib/types/database";
 
 export default function MyBadgePage() {
@@ -28,11 +29,7 @@ export default function MyBadgePage() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <div className="animate-pulse text-muted-foreground">Loading...</div>
-      </div>
-    );
+    return <LoadingScreen message="Loading Badge" />;
   }
 
   if (!profile) {

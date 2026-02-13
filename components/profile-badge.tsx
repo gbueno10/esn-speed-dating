@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import type { SpeedDatingProfile } from "@/lib/types/database";
 
 export function ProfileBadge({ profile }: { profile: SpeedDatingProfile }) {
@@ -14,41 +16,47 @@ export function ProfileBadge({ profile }: { profile: SpeedDatingProfile }) {
     .slice(0, 2);
 
   return (
-    <Card className="cyber-card overflow-hidden animate-fade-in border-0 max-w-sm mx-auto mt-4">
-      <div className="relative p-8 text-white text-center overflow-hidden bg-gradient-to-b from-primary/20 to-background">
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-40 h-40 bg-secondary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/20 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
+    <div className="w-full max-w-sm mx-auto mt-4 animate-in fade-in zoom-in-95 duration-500">
+      <Card className="relative glass-panel border-2 border-primary/50 flex flex-col items-center p-8 holographic-effect overflow-hidden rounded-[2.5rem] shadow-2xl">
+        {/* Decorative Corner Decor */}
+        <div className="absolute top-6 left-6 w-10 h-10 border-t-2 border-l-2 border-primary/40 rounded-tl-2xl" />
+        <div className="absolute bottom-6 right-6 w-10 h-10 border-b-2 border-r-2 border-secondary/40 rounded-br-2xl" />
 
-        <div className="relative z-10 flex flex-col items-center">
-          <Avatar className="h-28 w-28 mx-auto mb-4 border-4 border-secondary/50 shadow-[0_0_20px_rgba(255,204,0,0.3)] animate-scale-in">
-            <AvatarImage src={profile.avatar_url ?? undefined} />
-            <AvatarFallback className="text-2xl bg-primary text-white font-extrabold">
-              {initials}
-            </AvatarFallback>
-          </Avatar>
-          <h2 className="text-3xl font-black mb-1 tracking-tight glitch-hover" data-text={profile.name ?? "Anonymous"}>
-            {(profile.name ?? "Anonymous")}
+        <div className="flex flex-col items-center w-full">
+          <div className="relative mb-6">
+            <div className="absolute inset-0 bg-primary/30 rounded-full blur-2xl animate-pulse" />
+            <Avatar className="h-32 w-32 border-4 border-white relative z-10 shadow-xl">
+              <AvatarImage src={profile.avatar_url ?? undefined} className="object-cover" />
+              <AvatarFallback className="text-4xl bg-gradient-to-br from-primary to-accent text-white font-black">
+                {initials}
+              </AvatarFallback>
+            </Avatar>
+          </div>
+          
+          <h2 className="text-3xl font-black mb-1 tracking-tighter text-white drop-shadow-lg text-center leading-tight">
+            {profile.name}
           </h2>
-          <p className="text-secondary font-bold tracking-widest text-xs uppercase opacity-90">ESN Cyber Speed Dating</p>
-        </div>
-      </div>
+          
+          <div className="px-4 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/20 mb-8">
+            <p className="text-[10px] font-black text-secondary uppercase tracking-[0.2em]">ESN Speed Dating</p>
+          </div>
 
-      <CardContent className="flex flex-col items-center py-10 bg-card relative">
-        <div className="bg-white p-4 rounded-3xl shadow-2xl animate-slide-up border-4 border-primary/30 ring-4 ring-primary/10 transition-all hover:scale-105 duration-300">
-          <QRCodeSVG
-            value={profile.id}
-            size={200}
-            level="M"
-            includeMargin={false}
-            fgColor="#240046" 
-            bgColor="#ffffff"
-          />
+          <div className="relative p-4 bg-white rounded-[2rem] shadow-[0_0_30px_rgba(255,0,127,0.2)] group transition-transform duration-500 hover:scale-105">
+            <QRCodeSVG
+              value={profile.id}
+              size={180}
+              level="M"
+              includeMargin={false}
+              fgColor="#240046" 
+              bgColor="#ffffff"
+            />
+          </div>
+          
+          <p className="text-white/60 font-bold mt-6 text-center text-[10px] uppercase tracking-widest leading-relaxed max-w-[200px]">
+            Show this to <span className="text-primary">connect</span>
+          </p>
         </div>
-        <p className="text-muted-foreground mt-8 text-center max-w-xs font-medium leading-relaxed">
-          Show this <span className="text-primary font-bold">QR Code</span> to others so they can scan and connect with you!
-        </p>
-      </CardContent>
-    </Card>
+      </Card>
+    </div>
   );
 }

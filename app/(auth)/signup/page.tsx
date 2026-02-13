@@ -69,22 +69,22 @@ export default function SignupPage() {
   }
 
   return (
-    <Card className="w-full max-w-md cyber-card border-none overflow-hidden animate-fade-in relative group my-8">
+    <Card className="w-full max-w-md event-card border-none overflow-hidden animate-fade-in relative group my-8">
       {/* Background Animated Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-secondary/10 opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
       
       <div className="relative p-6 text-center overflow-hidden">
         {/* Decorative elements */}
-        <div className="absolute top-0 left-0 w-40 h-40 bg-secondary/20 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2" />
+        <div className="absolute top-0 left-0 w-40 h-40 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2" />
         <div className="absolute bottom-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-2xl translate-y-1/2 translate-x-1/2" />
 
         <div className="relative z-10 space-y-2">
-          <div className="text-4xl mb-2 animate-pulse-slow drop-shadow-[0_0_15px_rgba(255,204,0,0.5)]">✨</div>
+          <div className="text-4xl mb-2 animate-bounce drop-shadow-[0_0_20px_rgba(255,0,127,0.6)]">✨</div>
           <CardTitle className="text-3xl font-black mb-1 glitch-hover" data-text="JOIN THE SYSTEM">
             JOIN THE SYSTEM
           </CardTitle>
           <CardDescription className="text-muted-foreground font-semibold tracking-wide uppercase text-xs">
-            ESN Cyber Speed Dating
+            ESN Speed Dating
           </CardDescription>
         </div>
       </div>
@@ -104,7 +104,7 @@ export default function SignupPage() {
                   id="name"
                   name="name"
                   placeholder="e.g. DATA USER 01"
-                  className="cyber-input"
+                  className="event-input"
                   required
                 />
               </div>
@@ -116,7 +116,7 @@ export default function SignupPage() {
                       id="instagram_handle"
                       name="instagram_handle"
                       placeholder="username"
-                      className="cyber-input pl-8"
+                      className="event-input pl-8"
                       required
                     />
                 </div>
@@ -162,7 +162,7 @@ export default function SignupPage() {
               name="email"
               type="email"
               placeholder="user@example.com"
-              className="cyber-input"
+              className="event-input"
               required
             />
           </div>
@@ -174,7 +174,7 @@ export default function SignupPage() {
               type="password"
               placeholder="••••••••"
               minLength={6}
-              className="cyber-input"
+              className="event-input"
               required
             />
           </div>
@@ -188,9 +188,9 @@ export default function SignupPage() {
           </Button>
         </form>
 
-        <p className="text-center text-sm text-muted-foreground mt-6">
+        <p className="text-center text-sm text-white/50 mt-6 font-medium">
           Already registered?{" "}
-          <Link href="/login" className="text-secondary font-bold hover:text-white transition-colors uppercase tracking-wide">
+          <Link href="/login" className="text-primary font-black hover:text-white transition-colors uppercase tracking-widest text-xs underline underline-offset-4">
             Access System
           </Link>
         </p>

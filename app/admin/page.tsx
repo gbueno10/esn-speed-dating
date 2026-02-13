@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { AdminToggle } from "@/components/admin-toggle";
+import { LoadingScreen } from "@/components/ui/loading-screen";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import type { SpeedDatingSettings } from "@/lib/types/database";
@@ -67,11 +68,7 @@ export default function AdminPage() {
   }
 
   if (!settings) {
-    return (
-      <div className="min-h-svh flex items-center justify-center">
-        <div className="animate-pulse text-muted-foreground">Loading...</div>
-      </div>
-    );
+    return <LoadingScreen message="Admin Panel" />;
   }
 
   return (
@@ -81,7 +78,7 @@ export default function AdminPage() {
         <p className="text-secondary font-bold tracking-widest text-xs uppercase mt-1">Administrator Access</p>
       </header>
       <div className="max-w-md mx-auto py-6 space-y-6">
-        <Card className="cyber-card border-none bg-card/50">
+        <Card className="event-card border-none bg-card/50">
           <div className="p-6 pb-2">
              <div className="flex items-center gap-3 mb-2">
                 <div className="h-3 w-3 bg-primary rounded-full animate-pulse" />
