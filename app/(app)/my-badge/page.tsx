@@ -40,5 +40,11 @@ export default function MyBadgePage() {
     );
   }
 
-  return <ProfileBadge profile={profile} />;
+  return (
+    <ProfileBadge 
+      profile={profile} 
+      editable={true} 
+      onProfileUpdate={(updatedProfile) => setProfile(updatedProfile)} 
+    />
+  );
 }
