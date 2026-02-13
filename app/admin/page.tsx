@@ -75,26 +75,32 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-svh bg-background">
-      <header className="border-b px-4 py-3">
-        <h1 className="text-lg font-bold text-center">Admin Panel</h1>
+    <div className="min-h-svh bg-background p-4">
+      <header className="px-4 py-6 text-center">
+        <h1 className="text-3xl font-black text-white glitch-hover" data-text="SYSTEM CONTROL">SYSTEM CONTROL</h1>
+        <p className="text-secondary font-bold tracking-widest text-xs uppercase mt-1">Administrator Access</p>
       </header>
-      <div className="max-w-md mx-auto px-4 py-6 space-y-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Event Controls</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+      <div className="max-w-md mx-auto py-6 space-y-6">
+        <Card className="cyber-card border-none bg-card/50">
+          <div className="p-6 pb-2">
+             <div className="flex items-center gap-3 mb-2">
+                <div className="h-3 w-3 bg-primary rounded-full animate-pulse" />
+                <CardTitle className="text-xl font-bold text-white tracking-wide">EVENT CONFIGURATION</CardTitle>
+             </div>
+             <div className="h-px w-full bg-gradient-to-r from-primary to-transparent" />
+          </div>
+          <CardContent className="space-y-6 pt-4">
             <AdminToggle
-              label="Open Voting Phase"
-              description="Enables the Like buttons for all users"
+              label="VOTING PHASE"
+              description="Enable 'Like' functionality for all connected nodes."
               checked={settings.is_voting_open}
               onCheckedChange={(v) => updateSetting("is_voting_open", v)}
               disabled={updating}
             />
+            <div className="h-px w-full bg-white/5" />
             <AdminToggle
-              label="Reveal Matches"
-              description="Shows mutual matches and Instagram handles"
+              label="REVEAL MATCHES"
+              description="Broadcast mutual connections and contact data."
               checked={settings.are_matches_revealed}
               onCheckedChange={(v) => updateSetting("are_matches_revealed", v)}
               disabled={updating}

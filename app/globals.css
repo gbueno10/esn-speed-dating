@@ -147,6 +147,18 @@
     @apply rounded-3xl bg-card border border-white/10 shadow-xl;
   }
 
+  .esn-gradient {
+    @apply bg-gradient-to-br from-primary via-[#D0006F] to-secondary;
+  }
+  
+  .cyber-input {
+    @apply bg-muted/50 border-input focus:border-primary focus:ring-primary/50 text-white placeholder:text-muted-foreground/70 rounded-xl;
+  }
+
+  .auth-label {
+    @apply font-bold text-xs uppercase tracking-wider text-secondary;
+  }
+
   /* Keep existing animations but updated */
   .animate-fade-in {
     animation: fadeIn 0.3s ease-in-out;
