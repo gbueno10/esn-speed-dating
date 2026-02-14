@@ -91,7 +91,25 @@ export function MatchProfileModal({
         </div>
 
         {/* Buttons and Info */}
-        <div className="px-3 py-3 space-y-2">
+        <div className="px-3 py-3 space-y-3">
+          {/* Gender and Interest Badges */}
+          <div className="flex flex-wrap gap-2 px-1">
+            {profile.gender && (
+              <div className="px-2.5 py-1 bg-white/5 border border-white/10 rounded-full flex items-center gap-1.5">
+                <span className="text-[9px] font-bold text-white/40 uppercase tracking-tighter">Gender:</span>
+                <span className="text-[10px] font-black text-white/90 uppercase tracking-tight">
+                  {profile.gender === "prefer-not-to-say" ? "N/A" : profile.gender}
+                </span>
+              </div>
+            )}
+            {profile.interested_in && (
+              <div className="px-2.5 py-1 bg-white/5 border border-white/10 rounded-full flex items-center gap-1.5">
+                <span className="text-[9px] font-bold text-white/40 uppercase tracking-tighter">Looking for:</span>
+                <span className="text-[10px] font-black text-white/90 uppercase tracking-tight">{profile.interested_in}</span>
+              </div>
+            )}
+          </div>
+
           {profile.instagram_handle && isMutualMatch && (
             <Button
               onClick={handleOpenInstagram}

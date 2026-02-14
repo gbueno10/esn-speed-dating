@@ -40,6 +40,10 @@ export function EditProfileDrawer({
   const [nationality, setNationality] = useState<string | null>(
     profile.nationality
   );
+  const [gender, setGender] = useState<string | null>(profile.gender);
+  const [interestedIn, setInterestedIn] = useState<string | null>(
+    profile.interested_in
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const initials = (currentProfile.name ?? "Anonymous")
@@ -87,6 +91,8 @@ export function EditProfileDrawer({
             ? instagram.trim()
             : `@${instagram.trim()}`,
           nationality,
+          gender,
+          interested_in: interestedIn,
         }),
       });
 
@@ -173,7 +179,37 @@ export function EditProfileDrawer({
               placeholder="Your name"
             />
           </div>
-
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="gender" className="auth-label">Gender</Label>
+              <select
+                id="gender"
+                value={gender ?? ""}
+                onChange={(e) => setGender(e.target.value)}
+                className="flex h-10 w-full rounded-xl border border-input bg-muted/50 px-3 py-1 text-sm shadow-xs transition-colors text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary"
+              >
+                <option value="" className="bg-card">Select...</option>
+                <option value="male" className="bg-card">Male</option>
+                <option value="female" className="bg-card">Female</option>
+                <option value="non-binary" className="bg-card">Non-binary</option>
+                <option value="prefer-not-to-say" className="bg-card">N/A</option>
+              </select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="interested_in" className="auth-label">Looking For</Label>
+              <select
+                id="interested_in"
+                value={interestedIn ?? ""}
+                onChange={(e) => setInterestedIn(e.target.value)}
+                className="flex h-10 w-full rounded-xl border border-input bg-muted/50 px-3 py-1 text-sm shadow-xs transition-colors text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary"
+              >
+                <option value="" className="bg-card">Select...</option>
+                <option value="men" className="bg-card">Men</option>
+                <option value="women" className="bg-card">Women</option>
+                <option value="everyone" className="bg-card">Everyone</option>
+              </select>
+            </div>
+          </div>
           <div className="space-y-2">
             <Label className="auth-label">Instagram</Label>
             <div className="relative">

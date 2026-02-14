@@ -31,7 +31,13 @@ export async function GET() {
   }
 }
 
-const ALLOWED_FIELDS = ["name", "instagram_handle", "nationality"] as const;
+const ALLOWED_FIELDS = [
+  "name",
+  "instagram_handle",
+  "nationality",
+  "gender",
+  "interested_in",
+] as const;
 
 export async function PATCH(request: NextRequest) {
   try {
