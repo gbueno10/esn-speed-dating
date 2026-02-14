@@ -17,12 +17,14 @@ export function ConnectionGrid({
   matchesRevealed,
   currentProfileId,
   onLikeToggle,
+  onCardClick,
 }: {
   connections: ConnectionItem[];
   votingOpen: boolean;
   matchesRevealed: boolean;
   currentProfileId: string;
   onLikeToggle: () => void;
+  onCardClick?: (connection: ConnectionItem) => void;
 }) {
   if (connections.length === 0) {
     return (
@@ -52,6 +54,7 @@ export function ConnectionGrid({
             matchesRevealed={matchesRevealed}
             currentProfileId={currentProfileId}
             onLikeToggle={onLikeToggle}
+            onCardClick={() => onCardClick?.(conn)}
           />
         </div>
       ))}

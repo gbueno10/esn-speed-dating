@@ -6,20 +6,20 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { SpeedDatingProfile } from "@/lib/types/database";
-import { Plus, Loader2 } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
+import { Plus, Loader2, Pencil } from "lucide-react";
+import { uploadAvatar } from "@/lib/upload-avatar";
 import { toast } from "sonner";
 
 interface ProfileBadgeProps {
   profile: SpeedDatingProfile;
   editable?: boolean;
   onProfileUpdate?: (updatedProfile: SpeedDatingProfile) => void;
+  onEditClick?: () => void;
 }
 
-export function ProfileBadge({ profile, editable = false, onProfileUpdate }: ProfileBadgeProps) {
+export function ProfileBadge({ profile, editable = false, onProfileUpdate, onEditClick }: ProfileBadgeProps) {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const supabase = createClient();
 
   const initials = (profile.name ?? "Anonymous")
     .split(" ")
@@ -29,43 +29,13 @@ export function ProfileBadge({ profile, editable = false, onProfileUpdate }: Pro
     .slice(0, 2);
 
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files || event.target.files.length === 0) return;
+
     try {
       setUploading(true);
-
-      if (!event.target.files || event.target.files.length === 0) {
-        return;
-      }
-
-      const file = event.target.files[0];
-      const fileExt = file.name.split(".").pop();
-      const filePath = `${profile.user_id}/${Math.random()}.${fileExt}`;
-
-      // 1. Upload to storage
-      const { error: uploadError } = await supabase.storage
-        .from("avatars")
-        .upload(filePath, file);
-
-      if (uploadError) throw uploadError;
-
-      // 2. Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from("avatars")
-        .getPublicUrl(filePath);
-
-      // 3. Update profile in DB
-      const { data: updatedData, error: updateError } = await supabase
-        .from("speed_dating_profiles")
-        .update({ avatar_url: publicUrl })
-        .eq("id", profile.id)
-        .select()
-        .single();
-
-      if (updateError) throw updateError;
-
+      const updatedProfile = await uploadAvatar(event.target.files[0], profile);
       toast.success("Foto de perfil atualizada!");
-      if (onProfileUpdate && updatedData) {
-        onProfileUpdate(updatedData as SpeedDatingProfile);
-      }
+      onProfileUpdate?.(updatedProfile);
     } catch (error: any) {
       console.error("Upload error:", error);
       toast.error("Erro ao subir imagem: " + (error.message || "Tente novamente"));
@@ -80,6 +50,19 @@ export function ProfileBadge({ profile, editable = false, onProfileUpdate }: Pro
         {/* Decorative Corner Decor */}
         <div className="absolute top-6 left-6 w-10 h-10 border-t-2 border-l-2 border-primary/40 rounded-tl-2xl" />
         <div className="absolute bottom-6 right-6 w-10 h-10 border-b-2 border-r-2 border-secondary/40 rounded-br-2xl" />
+
+        {/* Edit Button */}
+        {editable && onEditClick && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onEditClick();
+            }}
+            className="absolute top-4 right-4 z-20 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 hover:border-primary/50 p-2.5 rounded-full transition-all hover:scale-110 group"
+          >
+            <Pencil className="w-4 h-4 text-white/70 group-hover:text-primary transition-colors" />
+          </button>
+        )}
 
         <div className="flex flex-col items-center w-full">
           <div 

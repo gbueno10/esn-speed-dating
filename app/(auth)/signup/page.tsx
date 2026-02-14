@@ -14,11 +14,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { NationalityPicker } from "@/components/nationality-picker";
 
 export default function SignupPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [nationality, setNationality] = useState<string | null>(null);
 
   async function handleSignup(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -32,6 +34,7 @@ export default function SignupPage() {
     const instagram_handle = formData.get("instagram_handle") as string;
     const gender = formData.get("gender") as string;
     const interested_in = formData.get("interested_in") as string;
+    const selectedNationality = nationality;
 
     const supabase = createClient();
 
@@ -62,6 +65,7 @@ export default function SignupPage() {
           instagram_handle,
           gender,
           interested_in,
+          nationality: selectedNationality,
         });
     }
 
@@ -153,6 +157,14 @@ export default function SignupPage() {
                   <option value="everyone" className="bg-card">Everyone</option>
                 </select>
               </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label className="auth-label">Nationality</Label>
+            <NationalityPicker
+              value={nationality}
+              onChange={setNationality}
+            />
           </div>
 
           <div className="space-y-2">

@@ -1,15 +1,24 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 import { QrCode, Users, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   async function handleLogout() {
     const supabase = createClient();
@@ -52,7 +61,7 @@ export function Navbar() {
         <Button
           variant="ghost"
           size="sm"
-          onClick={handleLogout}
+          onClick={() => setShowLogoutConfirm(true)}
           className="flex flex-col items-center gap-1 text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-auto py-1"
         >
           <div className="p-2 rounded-full">
@@ -61,6 +70,34 @@ export function Navbar() {
           <span className="text-[10px] font-bold tracking-wider uppercase">Logout</span>
         </Button>
       </div>
+
+      <Dialog open={showLogoutConfirm} onOpenChange={setShowLogoutConfirm}>
+        <DialogContent className="bg-card border-primary/30 rounded-2xl w-[85vw] max-w-[340px] sm:max-w-[340px] p-6 gap-4">
+          <DialogHeader>
+            <DialogTitle className="text-center text-white text-lg font-black">
+              Are you sure?
+            </DialogTitle>
+          </DialogHeader>
+          <p className="text-center text-sm text-muted-foreground">
+            You will be logged out of your account.
+          </p>
+          <DialogFooter className="flex-row gap-2 sm:flex-row">
+            <Button
+              variant="outline"
+              onClick={() => setShowLogoutConfirm(false)}
+              className="flex-1 rounded-full border-white/20 text-white hover:bg-white/10"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleLogout}
+              className="flex-1 rounded-full bg-destructive hover:bg-destructive/80 text-white font-bold"
+            >
+              Logout
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </nav>
   );
 }

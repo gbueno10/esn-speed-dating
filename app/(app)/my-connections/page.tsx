@@ -3,9 +3,28 @@
 import { useEffect, useState } from "react";
 import { useAppSettings } from "@/components/app-settings-provider";
 import { ConnectionGrid } from "@/components/connection-grid";
+import { MatchProfileModal } from "@/components/match-profile-modal";
+import { TondelaModal } from "@/components/tondela-modal";
 import { Badge } from "@/components/ui/badge";
 import { LoadingScreen } from "@/components/ui/loading-screen";
 import { Clock, Heart, Sparkles } from "lucide-react";
+import type { SpeedDatingProfile } from "@/lib/types/database";
+
+const TONDELA_CONNECTION = {
+  id: "tondela",
+  user: {
+    id: "tondela",
+    name: "Tondela",
+    avatar_url: "/tondela.png",
+    nationality: "PT",
+    instagram_handle: null,
+    gender: null,
+    interested_in: null,
+  },
+  iLikedThem: true,
+  theyLikedMe: true,
+  isMutualMatch: true,
+};
 
 type ConnectionItem = {
   id: string;
@@ -19,6 +38,10 @@ export default function MyConnectionsPage() {
   const [connections, setConnections] = useState<ConnectionItem[]>([]);
   const [profileId, setProfileId] = useState<string>("");
   const [loading, setLoading] = useState(true);
+  const [selectedProfile, setSelectedProfile] = useState<SpeedDatingProfile | null>(null);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [selectedIsMutualMatch, setSelectedIsMutualMatch] = useState(false);
+  const [showTondelaModal, setShowTondelaModal] = useState(false);
   const { is_voting_open, are_matches_revealed } = useAppSettings();
 
   async function fetchConnections() {
@@ -90,11 +113,32 @@ export default function MyConnectionsPage() {
       </div>
 
       <ConnectionGrid
-        connections={connections}
+        connections={[TONDELA_CONNECTION, ...connections]}
         votingOpen={is_voting_open}
         matchesRevealed={are_matches_revealed}
         currentProfileId={profileId}
         onLikeToggle={fetchConnections}
+        onCardClick={(connection) => {
+          if (connection.id === "tondela") {
+            setShowTondelaModal(true);
+            return;
+          }
+          setSelectedProfile(connection.user);
+          setSelectedIsMutualMatch(connection.isMutualMatch);
+          setShowProfileModal(true);
+        }}
+      />
+
+      <MatchProfileModal
+        profile={selectedProfile}
+        open={showProfileModal}
+        onOpenChange={setShowProfileModal}
+        isMutualMatch={selectedIsMutualMatch}
+      />
+
+      <TondelaModal
+        open={showTondelaModal}
+        onOpenChange={setShowTondelaModal}
       />
     </div>
   );

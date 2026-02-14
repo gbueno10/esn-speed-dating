@@ -4,6 +4,7 @@ export type SpeedDatingProfile = {
   name: string;
   instagram_handle: string;
   avatar_url: string | null;
+  nationality: string | null;
   gender: "male" | "female" | "non-binary" | "prefer-not-to-say" | null;
   interested_in: "men" | "women" | "everyone" | null;
   is_admin: boolean;
