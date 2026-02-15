@@ -5,9 +5,11 @@ import { useAppSettings } from "@/components/app-settings-provider";
 import { ConnectionGrid } from "@/components/connection-grid";
 import { MatchProfileModal } from "@/components/match-profile-modal";
 import { TondelaModal } from "@/components/tondela-modal";
+import { FeedbackModal } from "@/components/feedback-modal";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { LoadingScreen } from "@/components/ui/loading-screen";
-import { Clock, Heart, Sparkles } from "lucide-react";
+import { Clock, Heart, Sparkles, Timer } from "lucide-react";
 import type { SpeedDatingProfile } from "@/lib/types/database";
 
 const TONDELA_CONNECTION = {
@@ -42,7 +44,40 @@ export default function MyConnectionsPage() {
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [selectedIsMutualMatch, setSelectedIsMutualMatch] = useState(false);
   const [showTondelaModal, setShowTondelaModal] = useState(false);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [timeLeft, setTimeLeft] = useState<string>("");
   const { is_voting_open, are_matches_revealed } = useAppSettings();
+
+  useEffect(() => {
+    // Definir 3 dias a partir de agora (18 de fevereiro de 2026, já que hoje é 15)
+    const targetDate = new Date("2026-02-18T23:59:59");
+    
+    const timer = setInterval(() => {
+      const now = new Date();
+      const diff = targetDate.getTime() - now.getTime();
+      
+      if (diff <= 0) {
+        setTimeLeft("Expired");
+        clearInterval(timer);
+      } else {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const mins = Math.floor((diff / (1000 * 60)) % 60);
+        setTimeLeft(`${days}d ${hours}h ${mins}m`);
+      }
+    }, 1000);
+
+    // Abrir feedback após 5 segundos se os matches estiverem revelados
+    if (are_matches_revealed) {
+      const fbTimer = setTimeout(() => setShowFeedbackModal(true), 5000);
+      return () => {
+        clearInterval(timer);
+        clearTimeout(fbTimer);
+      };
+    }
+
+    return () => clearInterval(timer);
+  }, [are_matches_revealed]);
 
   async function fetchConnections() {
     try {
@@ -92,14 +127,39 @@ export default function MyConnectionsPage() {
       )}
 
       {are_matches_revealed && (
-        <div className="flex items-center gap-3 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20 text-purple-700 dark:text-purple-300 p-4 rounded-xl text-sm font-semibold shadow-md border-2 border-purple-300 dark:border-purple-700/30 animate-fade-in">
-          <div className="esn-gradient p-2 rounded-lg">
-            <Sparkles className="h-5 w-5 shrink-0 text-white" />
+        <div className="space-y-4">
+          <div className="flex items-center justify-between gap-3 bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-950/20 dark:to-orange-950/20 text-red-700 dark:text-red-300 p-4 rounded-xl text-sm font-semibold shadow-md border-2 border-red-300 dark:border-red-700/30 animate-fade-in">
+            <div className="flex items-center gap-3">
+              <div className="bg-red-500 p-2 rounded-lg animate-pulse">
+                <Sparkles className="h-5 w-5 shrink-0 text-white" />
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-base">
+                  ✨ You have {matchCount} mutual{" "}
+                  {matchCount === 1 ? "match" : "matches"}!
+                </span>
+                <span className="text-xs font-normal opacity-80">
+                  ⚠️ App closes & data deleted in 3 days - message your matches now!
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-end border-l border-red-200 dark:border-red-800/50 pl-4">
+                  <span className="text-[9px] uppercase tracking-tighter opacity-70 flex items-center gap-1">
+                    <Timer className="h-3 w-3" /> Deletes in
+                  </span>
+                  <span className="text-xs font-black font-mono">{timeLeft}</span>
+            </div>
           </div>
-          <span>
-            ✨ Matches revealed! You have {matchCount} mutual{" "}
-            {matchCount === 1 ? "match" : "matches"}!
-          </span>
+          
+          <Button 
+            variant="outline" 
+            className="w-full rounded-xl border-dashed border-2 border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-primary hover:border-primary transition-all py-6 h-auto flex flex-col gap-1"
+            onClick={() => setShowFeedbackModal(true)}
+          >
+            <span className="text-sm font-bold">Feedback / Give your opinion</span>
+            <span className="text-[10px] opacity-60">Help us improve next semester's events!</span>
+          </Button>
         </div>
       )}
 
@@ -139,6 +199,11 @@ export default function MyConnectionsPage() {
       <TondelaModal
         open={showTondelaModal}
         onOpenChange={setShowTondelaModal}
+      />
+
+      <FeedbackModal 
+        isOpen={showFeedbackModal}
+        onClose={() => setShowFeedbackModal(false)}
       />
     </div>
   );

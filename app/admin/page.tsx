@@ -6,6 +6,8 @@ import { AdminToggle } from "@/components/admin-toggle";
 import { LoadingScreen } from "@/components/ui/loading-screen";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { Heart } from "lucide-react";
+import Link from "next/link";
 import type { SpeedDatingSettings } from "@/lib/types/database";
 
 export default function AdminPage() {
@@ -102,6 +104,25 @@ export default function AdminPage() {
               onCheckedChange={(v) => updateSetting("are_matches_revealed", v)}
               disabled={updating}
             />
+          </CardContent>
+        </Card>
+
+        <Card className="event-card border-none bg-card/50">
+          <CardContent className="p-6">
+             <Link href="/admin/matches" className="flex items-center justify-between w-full group">
+                <div className="flex items-center gap-3">
+                   <div className="h-10 w-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                      <Heart className="h-5 w-5 text-primary" />
+                   </div>
+                   <div className="text-left">
+                      <div className="text-sm font-bold text-white uppercase tracking-wider">Match Explorer</div>
+                      <div className="text-[10px] text-white/40 font-bold uppercase tracking-widest">Audit mutual connections</div>
+                   </div>
+                </div>
+                <div className="text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                   →
+                </div>
+             </Link>
           </CardContent>
         </Card>
       </div>
