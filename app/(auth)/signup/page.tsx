@@ -122,7 +122,7 @@ export default function SignupPage() {
           <CardDescription className="text-muted-foreground font-semibold tracking-wide uppercase text-xs">
             {isOnboardingMode
               ? `Signed in as ${existingUserEmail}`
-              : "ESN Speed Dating"}
+              : "enmatch"}
           </CardDescription>
         </div>
       </div>

@@ -14,7 +14,7 @@ const workSans = Work_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Scan & Match - ESN Porto",
+  title: "enmatch",
   description: "Scan QR codes, meet people, find your match!",
 };
 

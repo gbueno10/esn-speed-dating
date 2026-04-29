@@ -16,8 +16,8 @@ const TONDELA_CONNECTION = {
   id: "tondela",
   user: {
     id: "tondela",
-    name: "Tondela",
-    avatar_url: "/tondela.png",
+    name: "Tutubarão",
+    avatar_url: "/Gemini_Generated_Image_20hjuv20hjuv20hj.png",
     nationality: "PT",
     instagram_handle: null,
     gender: null,

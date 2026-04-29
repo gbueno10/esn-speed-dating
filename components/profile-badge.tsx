@@ -121,7 +121,7 @@ export function ProfileBadge({ profile, editable = false, onProfileUpdate, onEdi
           </h2>
           
           <div className="px-4 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/20 mb-8">
-            <p className="text-[10px] font-black text-secondary uppercase tracking-[0.2em]">ESN Speed Dating</p>
+            <p className="text-[10px] font-black text-secondary uppercase tracking-[0.2em]">enmatch</p>
           </div>
 
           <div className="relative p-4 bg-white rounded-[2rem] shadow-[0_0_30px_rgba(255,0,127,0.2)] group transition-transform duration-500 hover:scale-105">

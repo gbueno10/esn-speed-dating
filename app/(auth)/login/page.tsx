@@ -61,7 +61,7 @@ export default function LoginPage() {
             WELCOME BACK
           </CardTitle>
           <CardDescription className="text-muted-foreground font-semibold tracking-wide uppercase text-xs">
-            ESN Speed Dating
+            enmatch
           </CardDescription>
         </div>
       </div>

@@ -36,7 +36,7 @@ export default async function AppLayout({
         <div className="relative z-10">
           <header className="border-b border-border/40 backdrop-blur-md sticky top-0 px-4 py-3 bg-background/60">
             <h1 className="text-xl font-black text-center tracking-tighter uppercase italic">
-              Speed Dating <span className="text-primary">ESN</span>
+              <span className="text-primary">EN</span><span className="text-primary">M</span>ATCH
             </h1>
           </header>
           <main className="max-w-md mx-auto px-4 py-6">{children}</main>

@@ -50,15 +50,15 @@ export function TondelaModal({ open, onOpenChange }: TondelaModalProps) {
           {/* Tondela Header - compact */}
           <div className="relative w-full h-40 overflow-hidden shrink-0">
             <img
-              src="/tondela.png"
-              alt="Tondela"
+              src="/Gemini_Generated_Image_20hjuv20hjuv20hj.png"
+              alt="Tutubarão"
               className="w-full h-full object-cover object-top"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
 
             <div className="absolute bottom-0 left-0 right-0 p-3">
               <h2 className="text-lg font-black tracking-tight text-white leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                Tondela
+                Tutubarão
               </h2>
               <span className="text-[10px] font-semibold text-white/80 tracking-wide">
                 ESN Porto Mascot
