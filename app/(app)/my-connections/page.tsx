@@ -5,9 +5,7 @@ import { useAppSettings } from "@/components/app-settings-provider";
 import { ConnectionGrid } from "@/components/connection-grid";
 import { MatchProfileModal } from "@/components/match-profile-modal";
 import { TondelaModal } from "@/components/tondela-modal";
-import { FeedbackModal } from "@/components/feedback-modal";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { LoadingScreen } from "@/components/ui/loading-screen";
 import { Clock, Heart, Sparkles, Timer } from "lucide-react";
 import type { SpeedDatingProfile } from "@/lib/types/database";
@@ -44,7 +42,6 @@ export default function MyConnectionsPage() {
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [selectedIsMutualMatch, setSelectedIsMutualMatch] = useState(false);
   const [showTondelaModal, setShowTondelaModal] = useState(false);
-  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [timeLeft, setTimeLeft] = useState<string>("");
   const { is_voting_open, are_matches_revealed } = useAppSettings();
 
@@ -67,17 +64,8 @@ export default function MyConnectionsPage() {
       }
     }, 1000);
 
-    // Abrir feedback após 5 segundos se os matches estiverem revelados
-    if (are_matches_revealed) {
-      const fbTimer = setTimeout(() => setShowFeedbackModal(true), 5000);
-      return () => {
-        clearInterval(timer);
-        clearTimeout(fbTimer);
-      };
-    }
-
     return () => clearInterval(timer);
-  }, [are_matches_revealed]);
+  }, []);
 
   async function fetchConnections() {
     try {
@@ -151,15 +139,6 @@ export default function MyConnectionsPage() {
                   <span className="text-xs font-black font-mono">{timeLeft}</span>
             </div>
           </div>
-          
-          <Button 
-            variant="outline" 
-            className="w-full rounded-xl border-dashed border-2 border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-primary hover:border-primary transition-all py-6 h-auto flex flex-col gap-1"
-            onClick={() => setShowFeedbackModal(true)}
-          >
-            <span className="text-sm font-bold">Feedback / Give your opinion</span>
-            <span className="text-[10px] opacity-60">Help us improve next semester's events!</span>
-          </Button>
         </div>
       )}
 
@@ -199,11 +178,6 @@ export default function MyConnectionsPage() {
       <TondelaModal
         open={showTondelaModal}
         onOpenChange={setShowTondelaModal}
-      />
-
-      <FeedbackModal 
-        isOpen={showFeedbackModal}
-        onClose={() => setShowFeedbackModal(false)}
       />
     </div>
   );

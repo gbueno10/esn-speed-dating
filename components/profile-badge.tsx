@@ -38,7 +38,7 @@ export function ProfileBadge({ profile, editable = false, onProfileUpdate, onEdi
       onProfileUpdate?.(updatedProfile);
     } catch (error: any) {
       console.error("Upload error:", error);
-      toast.error("Erro ao subir imagem: " + (error.message || "Tente novamente"));
+      toast.error("Failed to upload image: " + (error.message || "Try again"));
     } finally {
       setUploading(false);
     }
@@ -143,7 +143,7 @@ export function ProfileBadge({ profile, editable = false, onProfileUpdate, onEdi
       
       {editable && !profile.avatar_url && (
         <p className="text-center mt-6 text-[10px] font-black text-primary animate-bounce uppercase tracking-[0.2em] drop-shadow-[0_0_8px_rgba(255,0,127,0.5)]">
-          ✨ Toca no + para adicionar foto! ✨
+          ✨ Tap the + to add a photo! ✨
         </p>
       )}
     </div>

@@ -35,7 +35,7 @@ export default function AdminPage() {
         "postgres_changes",
         {
           event: "UPDATE",
-          schema: "public",
+          schema: "speed_dating",
           table: "speed_dating_settings",
           filter: "id=eq.1",
         },

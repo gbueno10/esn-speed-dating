@@ -60,9 +60,6 @@ export function TondelaModal({ open, onOpenChange }: TondelaModalProps) {
               <h2 className="text-lg font-black tracking-tight text-white leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                 Tutubarão
               </h2>
-              <span className="text-[10px] font-semibold text-white/80 tracking-wide">
-                ESN Porto Mascot
-              </span>
             </div>
           </div>
 
